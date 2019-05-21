@@ -62,6 +62,9 @@ BiocManager::available("TxDb.Hsapiens")
 
 ## 2. Working with Genomic Ranges
 + Importing data
++ Working with genomic ranges
++ Genomic annotations
++ Overlaps
 
 `rtracklayer`包提供函数`import()` 帮助用户读取基因组格式的文件(例如：BED,GTF,VCF,FASTA) 并封装成Bioconductor下的对象。`GenomicRanges`包提供了多种函数，来在基因组坐标系下操纵各种数据。
 #### 2.1 importing data 导入bed文件
