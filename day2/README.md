@@ -7,7 +7,7 @@ https://bioconductor.github.io/BiocWorkshops/r-and-bioconductor-for-everyone-an-
 本章主要学习SummatizedExperiment包和`SummarizedExperiment`对象
 `SummarizedExperiment`对象具有类似于矩阵的性质，我们可以通过行和列，对它取子集。
 来自于SummarizedExperiment对象实验的数据assay()，它的行代表我们感兴趣的特征(例如基因)，列代表每个样本，（矩阵中的每个值可能代表每个基因的在不同样本中的表达量)
-![SummarizedExperiment](https://github.com/Candlelight-XYJ/Bioinformatics-100days/blob/master/day2/SummarizedExperiment.png/)
+![SummarizedExperiment](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day2/SummarizedExperiment.png)
 
 #### 1.2 构建SummarizedExperiment对象
 > **数据介绍**
