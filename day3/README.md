@@ -91,7 +91,7 @@ GSM2194081   SW620-miR625-rep3     shRNA: miR-625-3p
 **所以提取表型信息和feature信息的时候，首先用phenoData()和featureData()提取出相应的变量对象，然后一定要用pData（）将对象中的信息返回成数据框格式的数据！**
 
 #### 2.5 Annotation sources 注释资源
-
+![resources](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day3/pic/resources.png)
 
 ---
 
