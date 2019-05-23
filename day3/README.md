@@ -34,14 +34,15 @@ https://bioconductor.github.io/BiocWorkshops/introduction-to-bioconductor-annota
 ## 2. Annotation WorkShop
 #### 2.1 What do we mean by annotation-常规用处
 Annotation实质就是我们为自己已经获得的某些数据的`ID号`添加上功能或者位置信息
-
+![mapping](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day3/pic/mapping.png)
 #### 2.2 What do we mean by annotation-特殊用途
-为数据和统计数据，添加其他有用的信息（不只是ID号），注释完成的结果可能是一个data.frame的数据框，一个Html的网页，或者是一个**`RangedSummarizedExperiment`**对象
+为数据和统计数据，添加其他有用的信息（不只是ID号），注释完成的结果可能是一个data.frame的数据框，一个Html的网页，或者是一个`RangedSummarizedExperiment`对象
 
 
 #### 2.3 Data containers 
-
+![box](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day3/pic/boxes.png)
 #### 2.4 ExpressionSet
+![eset](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day3/pic/eset.png)
 ```r
 setwd("E:/GitHub/Bioinformatics-1000days/day3/")
 load("eset.Rdata")
@@ -79,7 +80,7 @@ head(pData(featureData(eset)))
 
 ```
 **`函数解释`**
-+ **phenoData()**   返回一个包含变量值和变量元数据信息的**`对象(object)`**
++ **phenoData()**   返回一个包含变量值和变量元数据信息的`对象(object)`
 + **pData()**   pData返回一个`数据框(data.frame)`，其中每行代表一个样本，每列代表一个变量,如下所示
 ```r
                          title characteristics_ch1.1
@@ -95,7 +96,7 @@ GSM2194081   SW620-miR625-rep3     shRNA: miR-625-3p
 ---
 
 ## 3. Interacting with AnnoDb packages
-+ 使用**`select()`**函数提取数据
++ 使用 **`select()`** 函数提取数据
 + 用法：**`select(annopkg, keys, columns, keytype)`**
 **annopkg** the annotation package(注释包)
 **keys** keys are the IDs that we know
@@ -145,7 +146,7 @@ columns(hugene20sttranscriptcluster.db)
 #> [21] "PROBEID"      "PROSITE"      "REFSEQ"       "SYMBOL"      
 #> [25] "UCSCKG"       "UNIGENE"      "UNIPROT"
 ```
-**`select()`**函数，也可以一次性选多列，但是这样可能会出现数据冗余的情况
+**`select()`** 函数，也可以一次性选多列，但是这样可能会出现数据冗余的情况
 ```r
 ids <- c('16737401','16657436' ,'16678303')
 select(hugene20sttranscriptcluster.db, ids, c("SYMBOL","MAP"))
