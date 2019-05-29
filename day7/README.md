@@ -10,7 +10,7 @@ mydb <- dbConnect(RSQLite::SQLite(), "my-db.sqlite")
 dbDisconnect(mydb)
 unlink("my-db.sqlite")
 ```
-可以使用双引号**`""`**来构建一个桌面的临时数据库，或者使用 **`:memory:`** 和 **`file::memory`**
+可以使用双引号 **`""`** 来构建一个桌面的临时数据库，或者使用 **`:memory:`** 和 **`file::memory`**
 构建一个内存里的数据库。当我们断开连接，临时数据库就会直接自动删除。
 
 ```r
