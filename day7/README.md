@@ -10,7 +10,7 @@ mydb <- dbConnect(RSQLite::SQLite(), "my-db.sqlite")
 dbDisconnect(mydb)
 unlink("my-db.sqlite")
 ```
-可以使用双引号**`""`**来构建一个桌面的临时数据库，或者使用 **`:memory:`**和 **`file::memory`**
+可以使用双引号**`""`**来构建一个桌面的临时数据库，或者使用 **`:memory:`** 和 **`file::memory`**
 构建一个内存里的数据库。当我们断开连接，临时数据库就会直接自动删除。
 
 ```r
@@ -72,7 +72,7 @@ dbClearResult(rs)
 ```
 + **`dbSendQuery() `** 可以执行一条查询，但是它不会直接抓取数据库中的数据记录
 + 使用 **`dbFetch() `** 对 **`dbSendQuery() `** 查询得到的object，进行数据的抓取
-+ 完成 **`dbSendQuery()`**  和 **`dbFetch()`**操作后，使用 **`dbClearResult()`** 来停止抓取数据的操作。
++ 完成 **`dbSendQuery()`**  和 **`dbFetch()`** 操作后，使用 **`dbClearResult()`** 来停止抓取数据的操作。
 
 ##  5. Multiple parameterised queries
 
