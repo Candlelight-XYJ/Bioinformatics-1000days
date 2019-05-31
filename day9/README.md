@@ -27,9 +27,7 @@ getSeq(Hsapiens, gns["5467",])
 ```
 Biostrings包包含处理这些 `*StringSet` 对象的大部分代码—可以参阅Biostrings小片段和帮助页面以获得更多信息。
 + **BSgenome 练习** Get the sequences for all transcripts of the TP53 gene
-````r
 
-```
 
 ## 2. AnnotationHub
 AnnotationHub是一个R包，也可以视作一个通道，我们可以在不安装相应注释包的情况下，通过它下载和查询多种不同的注释对象（annotation objects）
