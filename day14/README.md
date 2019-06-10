@@ -11,7 +11,8 @@ GDC数据库的数据结构较为复杂(如下图所示)，详细可访问:https
 ![gdc](https://github.com/Candlelight-XYJ/Bioinformatics-1000days/blob/master/day14/gdc.png)
 
 数据模型被编码为一个属性图。这个图中的节点实体代表 **`项目、病例、诊断、档案(各种类型)以及注释`** . 实体之间的关系由边相连。 节点和边都可能提供实例较为详细信息的属性。
-＞　The GDC API exposes these nodes and edges in a somewhat simplified set of RESTful endpoints
+
+>　The GDC API exposes these nodes and edges in a somewhat simplified set of RESTful endpoints
 
 ## 2. Quick start
 反馈R包的bug，可以通过： **`bug.report(package='GenomicDataCommons')`** 的方式来转入GitHub的Issue页进行提交
