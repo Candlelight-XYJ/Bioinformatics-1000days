@@ -1,4 +1,4 @@
-[toc]
+## RNA-seqdata analysis with limma edgeR
 
 使用limma,edgeR,Glimma 进行完整的数据分析流程指南 可参见：
 http://master.bioconductor.org/packages/release/workflows/html/RNAseq123.html
