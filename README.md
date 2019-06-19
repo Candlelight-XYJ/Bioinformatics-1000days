@@ -3,7 +3,7 @@
 
 + 本repository主要用于进阶生信技巧，补充生信小知识
 
-+ 每天的练习都配备了readme.md 的中文详细说明和代码
++ 每天的练习都配备了本人编写的readme.md 的中文详细说明和代码
 
 + 个人博客同步更新 https://blog.csdn.net/candle_light/article/category/8969079
 
