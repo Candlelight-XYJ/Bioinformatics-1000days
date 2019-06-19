@@ -35,39 +35,40 @@ samplenames
 
 ## 设置sample信息
 colnames(x) <- samplenames
+# 分组
 group <- as.factor(c("LP", "ML", "Basal", "Basal", "ML", "LP", 
                      "Basal", "ML", "LP"))
 x$samples$group <- group
 lane <- as.factor(rep(c("L004","L006","L008"), c(3,4,2)))
-x$samples$lane <- lane
-x$samples
+x$samples$lane <- lane # 添加lane的信息
+x$samples # 此时sample信息中就会多出分组和细胞类型两列
 
 ## using the Mus.musculus package 
 ## to retrieve associated gene symbols and chromosome information
 
 geneid <- rownames(x)
 genes <- select(Mus.musculus, keys=geneid, columns=c("SYMBOL", "TXCHROM"), 
-                keytype="ENTREZID")
+                keytype="ENTREZID") # 提取symbol和chr, 以entrezid作为map id的源头
 head(genes)
 ## !duplicated replicate genes
 genes <- genes[!duplicated(genes$ENTREZID),]
-## add genes
+## add genes 将提取好的基因信息添加入我们的DGEList中genes这个二级数据框
 x$genes <- genes
 x
 
 ## convert counts to CPM and log-CPM
 cpm <- cpm(x)
-lcpm <- cpm(x, log=TRUE)
+lcpm <- cpm(x, log=TRUE) # 取log值
 
 ## Removing genes that are lowly expressed
 # 首先查看那些在所有样本中均为0的基因数目
-table(rowSums(x$counts==0)==9)
-# 
+table(rowSums(x$counts==0)==9) # 可以发现有5153个基因在所有样本中表达量均为0
+# 取出至少在三个样本中cpm值均大于1的基因
 keep.exprs <- rowSums(cpm>1)>=3
-x <- x[keep.exprs,, keep.lib.sizes=FALSE]
+x <- x[keep.exprs,, keep.lib.sizes=FALSE] ## 代码啥意思
 dim(x)
 
-## 绘图展示过滤前后log-cpm值的分布情况
+## 绘图展示基因过滤前后log-cpm值的分布情况
 library(RColorBrewer)
 nsamples <- ncol(x)
 col <- brewer.pal(nsamples, "Paired")
