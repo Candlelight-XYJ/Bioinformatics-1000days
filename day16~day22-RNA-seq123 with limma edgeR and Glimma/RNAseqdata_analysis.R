@@ -1,4 +1,4 @@
-setwd("E:/GitHub/Bioinformatics-1000days/day17/")
+setwd("E:/GitHub/Bioinformatics-1000days/day16~day22-RNA-seq123 with limma edgeR and Glimma/")
 ## install RNASeq123
 BiocManager::install("RNAseq123")
 
@@ -71,20 +71,22 @@ dim(x)
 ## 绘图展示基因过滤前后log-cpm值的分布情况
 library(RColorBrewer)
 nsamples <- ncol(x)
-col <- brewer.pal(nsamples, "Paired")
+col <- brewer.pal(nsamples, "Paired") ## 配置绘图调色盘的主题，paired 是 qualitative palettes 中的一个颜色配置
+# col <- brewer.pal(nsamples, "Pastel1") # 尝试使用其它颜色
 par(mfrow=c(1,2))
 plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.21), las=2, 
-     main="", xlab="")
-title(main="A. Raw data", xlab="Log-cpm")
-abline(v=0, lty=3)
-for (i in 2:nsamples){
+     main="", xlab="") # 首先对第一列的第一个样本绘图
+title(main="A. Raw data", xlab="Log-cpm") # 加入title
+abline(v=0, lty=3) # 在0坐标处添加分隔虚线
+for (i in 2:nsamples){ # 批量在同一画布上绘出其它样本的cpm分布情况
   den <- density(lcpm[,i])
   lines(den$x, den$y, col=col[i], lwd=2)
 }
-legend("topright", samplenames, text.col=col, bty="n")
+legend("topright", samplenames, text.col=col, bty="n") # 添加图例
+## 开始对过滤后的lcpm绘图,函数功能注释基本同上
 lcpm <- cpm(x, log=TRUE)
 plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.21), las=2, 
-     main="", xlab="")
+     main="", xlab="") 
 title(main="B. Filtered data", xlab="Log-cpm")
 abline(v=0, lty=3)
 for (i in 2:nsamples){
@@ -120,7 +122,7 @@ title(main="B. Example: Normalised data",ylab="Log-cpm")
 # 展示样本之间的差异性与相似性
 # 同一个处理的多个重复，没啥实验误差的话一般会聚在一起
 lcpm <- cpm(x, log=TRUE)
-par(mfrow=c(1,2))
+par(mfrow=c(1,2)) # set huabu
 col.group <- group
 levels(col.group) <-  brewer.pal(nlevels(col.group), "Set1")
 col.group <- as.character(col.group)
