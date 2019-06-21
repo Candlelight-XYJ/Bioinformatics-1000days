@@ -140,28 +140,78 @@ glMDSPlot(lcpm, labels=paste(group, lane, sep="_"),
 
 ## 差异表达分析
 # First,建立分组信息
-design <- model.matrix(~0+group+lane)
-colnames(design) <- gsub("group", "", colnames(design))
+design <- model.matrix(~0+group+lane) # 设置分组矩阵
+colnames(design) <- gsub("group", "", colnames(design)) # 去掉列名中的group
 design
 
 # Second,use makeContrasts function 建立比较信息
 contr.matrix <- makeContrasts(
-  BasalvsLP = Basal-LP, 
-  BasalvsML = Basal - ML, 
-  LPvsML = LP - ML, 
-  levels = colnames(design))
+  BasalvsLP = Basal-LP, # Basal 和 LP 比较
+  BasalvsML = Basal - ML, # Basal 和 ML 比较
+  LPvsML = LP - ML, # LP 和 ML 比较
+  levels = colnames(design)) 
 contr.matrix
 
 # Third, Removing heteroscedascity from count data
 par(mfrow=c(1,2))
-v <- voom(x, design, plot=TRUE)
+v <- voom(x, design, plot=TRUE) # Transform RNA-Seq Data Ready for Linear Modelling
 v
 
-vfit <- lmFit(v, design)
-vfit <- contrasts.fit(vfit, contrasts=contr.matrix)
-efit <- eBayes(vfit)
+vfit <- lmFit(v, design) # Fit linear model for each gene given a series of arrays
+vfit <- contrasts.fit(vfit, contrasts=contr.matrix) # Given a linear model fit to microarray data, compute estimated coefficients and standard errors for a given set of contrasts.
+efit <- eBayes(vfit) # Empirical Bayes Statistics for Differential Expression
 plotSA(efit, main="Final model: Mean-variance trend")
 
-# Fourth, Fitting linear models for comparisons of interest
+# result
+summary(decideTests(efit))
 
+# treat 类似于 ebayes
+# When the number of DE genes is large, 
+# treat is often useful for giving preference to 
+# larger fold-changes and for prioritizing genes 
+# that are biologically important
+tfit <- treat(vfit, lfc=1)
+dt <- decideTests(tfit)
+summary(dt)
+
+# Fourth, plot Venn 
+# 取出BasalvsLP和BasalvsML 这两组比较中的共同差异基因
+de.common <- which(dt[,1]!=0 & dt[,2]!=0) 
+# 查看共同差异基因数目
+length(de.common)
+# 查看前20个基因symbol
+head(tfit$genes$SYMBOL[de.common], n=20)
+# 绘制Venn图
+vennDiagram(dt[,1:2], circle.col=c("turquoise", "salmon"))
+
+# Fifth , output result
+write.fit(tfit, dt, file="results.txt")
+
+## Examining individual DE genes from top to bottom
+
+# 使用 topTreat() 将差异基因按padj,logFC,log-CPM,t值 从小到大排序
+# n=Inf 表示选取所有基因参与排序
+basal.vs.lp <- topTreat(tfit, coef=1, n=Inf) # coef在此处代表选取的比对的组别
+basal.vs.ml <- topTreat(tfit, coef=2, n=Inf)
+head(basal.vs.lp)
+head(basal.vs.ml)
+
+## 差异基因结果可视化
+# plot MD
+plotMD(tfit, column=1, status=dt[,1], main=colnames(tfit)[1], 
+       xlim=c(-8,13))
+# plot MD using GLimma 这个包绘制出来的是动态的MD图
+glMDPlot(tfit, coef=1, status=dt, main=colnames(tfit)[1],
+         side.main="ENTREZID", counts=x$counts, groups=group, launch=FALSE)
+
+
+# plot heatmap
+library(gplots)
+basal.vs.lp.topgenes <- basal.vs.lp$ENTREZID[1:100]
+i <- which(v$genes$ENTREZID %in% basal.vs.lp.topgenes)
+mycol <- colorpanel(1000,"blue","white","red")
+heatmap.2(v$E[i,], scale="row",
+          labRow=v$genes$SYMBOL[i], labCol=group, 
+          col=mycol, trace="none", density.info="none", 
+          margin=c(8,6), lhei=c(2,10), dendrogram="column")
 
